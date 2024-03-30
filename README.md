@@ -1,7 +1,7 @@
 # CS50P-Final-Project - MealPlanner
 The Final Project of the CS50P online course. A command-line interface MealPlanner if you are indecisive of what to eat for each meal. 
 
-Video Demo &rarr;
+Video Demo &rarr; https://youtu.be/AEWFeAbsOu4
 
 ## Installation
 Use pip to install the package `sys` and `random`. Sys and random module should have come preinstalled with python.
