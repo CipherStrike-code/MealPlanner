@@ -1,10 +1,7 @@
 import random as rand
 import sys
 
-def user_list(userlist):
-    while True:
-        username = input("Enter your username:")
-        print()
+def user_list(userlist,username):
         while True:
             if not userlist or username not in userlist:
                 print("""Do you want to add username:
@@ -34,19 +31,19 @@ def breakfast(user, userlist):
         if option in [1, 2, 3]:
             if option == 1:
                 breakfast_choice = rand.choice(Eggs)
-                print(f"Your breakfast is {breakfast_choice}.\n")
+                breakfast = f"Your breakfast is {breakfast_choice}.\n"
             elif option == 2:
                 breakfast_choice = rand.choice(Meat)
-                print(f"Your breakfast is {breakfast_choice}.\n")
+                breakfast =  f"Your breakfast is {breakfast_choice}.\n"
             elif option == 3:
                 breakfast_choice = (rand.choice(Eggs), rand.choice(Meat))
-                print(f"Your breakfasts are {breakfast_choice[0]} and {breakfast_choice[1]}.\n")
+                breakfast = f"Your breakfasts are {breakfast_choice[0]} and {breakfast_choice[1]}.\n"
 
             if user not in userlist:
-                break
+                return breakfast
             else:
                 userlist[user].append(breakfast_choice)
-                break
+                return breakfast
         else:
             print("Please choose a valid option.\n")
 
@@ -62,19 +59,19 @@ def lunch(user, userlist):
         if option in [1, 2, 3]:
             if option == 1:
                 lunch_choice = rand.choice(Sandwiches)
-                print(f"Your lunch is {lunch_choice}.\n")
+                lunch =  f"Your lunch is {lunch_choice}.\n"
             elif option == 2:
                 lunch_choice = rand.choice(Burgers)
-                print(f"Your lunch is {lunch_choice}.\n")
+                lunch = f"Your lunch is {lunch_choice}.\n"
             elif option == 3:
                 lunch_choice = (rand.choice(Sandwiches), rand.choice(Burgers))
-                print(f"Your lunches are {lunch_choice[0]} and {lunch_choice[1]}.\n")
+                lunch = f"Your lunches are {lunch_choice[0]} and {lunch_choice[1]}.\n"
 
             if user not in userlist:
-                break
+                return lunch
             else:
                 userlist[user].append(lunch_choice)
-                break
+                return lunch
         else:
             print("Please choose a valid option.\n")
 
@@ -90,29 +87,29 @@ def dinner(user, userlist):
         if option in [1, 2, 3]:
             if option == 1:
                 dinner_choice = rand.choice(Rice)
-                print(f"Your dinner is {dinner_choice}.\n")
+                dinner = f"Your dinner is {dinner_choice}.\n"
             elif option == 2:
                 dinner_choice = rand.choice(Noodles)
-                print(f"Your dinner is {dinner_choice}.\n")
+                dinner = f"Your dinner is {dinner_choice}.\n"
             elif option == 3:
                 dinner_choice = (rand.choice(Rice), rand.choice(Noodles))
-                print(f"Your dinners are {dinner_choice[0]} and {dinner_choice[1]}.\n")
+                dinner = f"Your dinners are {dinner_choice[0]} and {dinner_choice[1]}.\n"
 
             if user not in userlist:
-                break
+                return dinner
             else:
                 userlist[user].append(dinner_choice)
-                break
+                return dinner
         else:
             print("Please choose a valid option.\n")
 
 def mealtime(option, user=None, userlist=None):
     if option == 1:
-        breakfast(user, userlist)
+        return breakfast(user, userlist)
     elif option == 2:
-        lunch(user, userlist)
+        return lunch(user, userlist)
     else:
-        dinner(user, userlist)
+        return dinner(user, userlist)
 
 def selection(option):
     return option in ["1", "2", "3", "4"]
@@ -121,7 +118,9 @@ def main():
     userlist = {}
     try:
         while True:
-            user, userlist = user_list(userlist)
+            username = input("Enter your username:")
+            print()
+            user, userlist = user_list(userlist,username)
             if user in userlist and len(userlist[user]) != 0:
                 last_meal = userlist[user][-1]
                 if isinstance(last_meal, tuple):
@@ -131,6 +130,7 @@ def main():
                         print("Your last meal was: " + ", ".join(last_meal[:-1]) + ", and " + last_meal[-1])
                 else:
                     print(f"Your last meal was: {last_meal}")
+
             while True:
                 print("""Please input the Menu options that you would like:
                 1. Breakfast
@@ -143,7 +143,7 @@ def main():
                 if selection(option):
                     if option == "4":
                         sys.exit()
-                    mealtime(int(option), user, userlist)
+                    print(mealtime(int(option), user, userlist))
                     break
                 else:
                     print("Please choose a valid option.\n")
